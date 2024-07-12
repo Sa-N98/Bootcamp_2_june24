@@ -1,0 +1,6 @@
+project statement url :
+https://docs.google.com/document/u/0/d/e/2PACX-1vSWc_RrSIlJZamInJ6n-KZtJkcgTpp-CsaR_-Kq_U5ZwzCf-zWU8b6RmaV86KaNiJVUJ5cFadTr88VI/pub
+
+V-Environment activation:
+windows: (venv name)\Scripts\activate
+Linux: source (venv name)/Bin/activate
