@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import os
 from model import * 
+from api import *
+from routs.artist_routs import artistrouts
+from  routs.user_routs import userrouts
+
 
 current_dir =os.path.abspath(os.path.dirname(__file__))
 
@@ -9,9 +13,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(current_dir,
 
 
 
-
 db.init_app(app)
 app.app_context().push() # program stack
+
+createAPI(app)
+
+
+
 
 # @app.route('/', methods=["GET"]) 
 # #  / = http://192.168.43.103:5000/
@@ -76,21 +84,16 @@ def login():
             if user_data.password == password_value:
 
                 if user_data.user_type == 'commoner':
-                    return "user dashbord template"
+                    return  redirect(url_for('user_dashbord'))
                 elif user_data.user_type == 'artist':
-                    return "artist dashbord template"
+                    return redirect(url_for('artist_dashbord'))
                 
         return render_template( 'userr_notadded.html', error_message= "User dosen't exists ", redirect_massage = 'Click here to Signup')
-
-
-
-
-
-
     return render_template('login.html')
-    
-    
-    
+        
+
+userrouts(app)
+artistrouts(app)
 
 
 if __name__ == "__main__" :

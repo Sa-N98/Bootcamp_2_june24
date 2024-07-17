@@ -6,8 +6,52 @@
     <title></title>
 </head>
 <body>
-    <form>
-        
+    <form  id="querryForm">
+        <select name="tag">
+            <option value="Artist"> Artist</option>
+            <option value="Song">Song</option>
+            <option value="Album">Album</option>
+        </select>
+
+        <input name="querry" type="text" placeholder="Search....">
+        <input type="submit" value="Search">
     </form>
+
+    <div id="content"> </div>
 </body>
+      
+<script>
+    form = document.getElementById('querryForm')
+    
+    form.addEventListener("submit", function(event){
+
+                                                    event.preventDefault()
+                                                    form_Data = new FormData( form )
+                                                    
+                                                    var tag =  form_Data.get('tag') 
+                                                    var query =  form_Data.get('querry') 
+
+                                                    console.log(tag)
+                                                    console.log(query)
+                                                    
+
+
+
+                                                    fetch('/api/userquery/'+ tag +'/'+ query)
+                                                    .then(res => res.json())
+                                                    .then(data =>{ for (key in data['output']){
+                                                        if(key != )
+                                                        console.log(key,  data['output'][key])
+                                                    }})
+                                                })
+
+  
+
+
+
+
+    
+</script>
+
+
 </html>

@@ -19,3 +19,16 @@ class users(db.Model):
     email= db.Column(db.String, unique=True)
     password= db.Column(db.String)
     user_type = db.Column(db.String)
+    album = db.relationship('albums', secondary='artist_album_relationship')
+
+class artist_album_relationship(db.Model):
+    __tablename__ = "artist_album_relationship"
+    artist_id =db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True,nullable = False )
+    album_id =db.Column(db.Integer, db.ForeignKey("albums.id"), primary_key=True,nullable = False )
+
+class albums(db.Model):
+    __tablename__ = "albums"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True ,nullable = False)
+    name = db.Column(db.String)
+    songs_list = db.Column(db.String)
+    artist = db.relationship('users', secondary='artist_album_relationship')
