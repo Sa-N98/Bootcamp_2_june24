@@ -4,6 +4,7 @@ from model import *
 def createAPI(app):
     appApi = Api(app)
     appApi.add_resource(userAPI, '/api/userquery/<tag>/<query>')
+    appApi.add_resource(artistAPI, '/api/addsong/')
 
 #CRUD
 
@@ -59,4 +60,37 @@ class userAPI(Resource):
 
         return {'output': data}
 
+
+class artistAPI(Resource):
+    def post(self):
+        parse_data= reqparse.RequestParser()
+        parse_data.add_argument('song_name')
+        parse_data.add_argument('file')
+        parse_data.add_argument('album')
+        parse_data.add_argument('albumart')
+
+        args= parse_data.parse_args()
+
+        print(args['song_name'])
+        print(args['file'])
+        print(args['album'])
+        print(args['albumart'])
+
+
+        newsong = songs(name= args['song_name'], mp3_url= args['file'], album_art=args['albumart'] )
+        db.session.add(newsong)
+        db.session.commit()
+        
+        song_id = songs.query.filter_by(name= args['song_name']).first()
+
+        newalbum = albums(name=args['album'], songs_list=song_id.id)
+
+        db.session.add(newalbum)
+        db.session.commit()
+
+
+
+
+
+        return {"massage": "song add succesfully"}
 

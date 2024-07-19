@@ -6,8 +6,35 @@
     <title></title>
 </head>
 <body>
-    <form>
-        
+    <form id="artist_form">
+        <input type="text" name="song" placeholder="song">
+        <input type="text" name="file" placeholder="file">
+        <input type="text" name="album" placeholder="album">   
+        <input type="text" name="albumart" placeholder="albumart">     
+        <input type="submit">   
     </form>
+
 </body>
+
+<script>
+   var  form = document.getElementById('artist_form')
+   form.addEventListener('submit', function(event){   
+                                                     event.preventDefault()
+                                                     data_form = new FormData(form)
+
+                                                     data ={"song_name": data_form.get('song'),
+                                                            "file": data_form.get('file'),
+                                                            "album": data_form.get('album'),
+                                                            "albumart": data_form.get('albumart'),
+                                                      }
+                                                      var url = '/api/addsong/'
+                                                      fetch(url, {
+                                                                    method: 'POST',
+                                                                    headers: {'Content-Type': 'application/json',},
+                                                                    body: JSON.stringify(data)
+                                                                }).then(res=> {return res.json()})
+                                                                .then(data=>{alert(data['massage'])})
+                                                    })
+</script>
+
 </html>
