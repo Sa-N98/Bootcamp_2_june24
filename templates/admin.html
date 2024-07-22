@@ -3,13 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    
     <title>Document</title>
 </head>
 <body>
     
-    
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <h3 id="totalArtist"></h3>
 </body>
+
 <script>
+
+    // const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    // const yValues = [155, 49, 44, 24, 150];
+    // const barColors = ["red", "green","blue","orange","brown"];
+    // const myChart = new Chart("myChart", {
+    //                                         type: "bar",
+    //                                         data: { labels: xValues,
+    //                                                 datasets: [{
+    //                                                             backgroundColor: barColors,
+    //                                                             data: yValues
+    //                                                             }]     
+    //                                                },
+    //                                         options: {  legend: {display: false},
+    //                                                     title: {
+    //                                                     display: true,
+    //                                                     text: "World Wine Production 2018"
+    //                                                     }}
+    //                                     });
+
+    async function getDataMakeChart(){
+        
+        var responce = await fetch('/get_data')
+        var dataAPI = await responce.json()
+        console.log('data ', dataAPI)
+        var x = dataAPI['artis'];
+        var y = dataAPI['album'];
+        var bar_Color = dataAPI['color'];
+        
+        // console.log(x,y,bar_Color)
+
+        const myChart = new Chart("myChart", {
+                                            type: "bar",
+                                            data: { labels: x,
+                                                    datasets: [{
+                                                                backgroundColor: bar_Color,
+                                                                data: y
+                                                                }]     
+                                                   },
+                                            options: {  legend: {display: false},
+                                                        title: {
+                                                        display: true,
+                                                        text: "Number Of Albums Per Artist"
+                                                        }}
+                                        });
+        var element = document.getElementById('totalArtist')
+        element.innerHTML= "TOTAL REGISTERED ARTIST: " + dataAPI['total_artist']
+    }
+
+    getDataMakeChart()
+
 </script>
 </html>
