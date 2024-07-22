@@ -4,6 +4,7 @@ from model import *
 from api import *
 from routs.artist_routs import artistrouts
 from  routs.user_routs import userrouts
+from  routs.admin import admin_routs
 
 
 current_dir =os.path.abspath(os.path.dirname(__file__))
@@ -94,6 +95,7 @@ def login():
 
 userrouts(app)
 artistrouts(app)
+admin_routs(app)
 
 
 if __name__ == "__main__" :
